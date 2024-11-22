@@ -26,6 +26,8 @@ const clockFace = document.querySelector('.clock');
 
 // Function for creating the hour markings
 function createMarks() {
+    const fragment = document.createDocumentFragment(); // For better performance
+
     for (let i = 0; i < 60; i++) {
         const mark = document.createElement('div');
 
@@ -33,12 +35,16 @@ function createMarks() {
             // Hour markers
             mark.classList.add('hour-mark');
         }
+
         mark.style.transform = `translateX(-50%) rotate(${i * 6}deg)`; // Rotate each mark by 6°
-        clockFace.appendChild(mark);
+        fragment.appendChild(mark); // Add mark to fragment
     }
+
+    // Append all marks at once to avoid reflow/repaint
+    clockFace.appendChild(fragment);
 }
 
-// Initializze the marks
+// Initialize the marks
 createMarks();
 
 // Initialize the clock
